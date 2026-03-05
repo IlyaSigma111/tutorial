@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Инструкция: Мои сайты-викторины</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -15,257 +15,355 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background: #0a0a0a;
-            color: white;
+            background: #0a0a0f;
             min-height: 100vh;
-            overflow: hidden;
-        }
-
-        .instruction {
-            width: 100vw;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-        }
-
-        /* Навигация */
-        .nav-bar {
-            background: rgba(0, 255, 0, 0.1);
-            backdrop-filter: blur(20px);
-            padding: 15px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 2px solid #0f0;
-            z-index: 100;
-            flex-shrink: 0;
-        }
-
-        .nav-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: #0f0;
-            text-shadow: 0 0 10px #0f0;
-        }
-
-        .nav-controls {
-            display: flex;
-            gap: 20px;
-            align-items: center;
-        }
-
-        .nav-btn {
-            background: rgba(0, 255, 0, 0.1);
-            border: 2px solid #0f0;
-            color: #0f0;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            font-size: 1.5rem;
-            cursor: pointer;
-            transition: all 0.3s;
             display: flex;
             align-items: center;
             justify-content: center;
+            overflow: hidden;
+            position: relative;
         }
 
-        .nav-btn:hover {
-            background: rgba(0, 255, 0, 0.3);
-            box-shadow: 0 0 30px #0f0;
-            transform: scale(1.1);
+        /* ФОН С ЭФФЕКТАМИ */
+        body::before {
+            content: '';
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(255, 0, 255, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(0, 255, 255, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(255, 255, 0, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 60% 20%, rgba(0, 255, 0, 0.2) 0%, transparent 50%);
+            z-index: -1;
         }
 
-        .nav-btn:disabled {
-            opacity: 0.3;
-            pointer-events: none;
+        /* ОСНОВНОЙ КОНТЕЙНЕР */
+        .instruction {
+            width: 95vw;
+            height: 95vh;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 48px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
         }
 
-        .slide-counter {
-            font-size: 1.2rem;
-            color: #0f0;
-            background: rgba(0, 0, 0, 0.5);
-            padding: 8px 20px;
-            border-radius: 50px;
-            border: 1px solid #0f0;
+        /* ВЕРХНЯЯ ПАНЕЛЬ */
+        .top-bar {
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.2);
+            flex-shrink: 0;
         }
 
-        .home-btn {
-            background: rgba(255, 0, 255, 0.1);
-            border: 2px solid #ff00ff;
-            color: #ff00ff;
-            padding: 8px 20px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s;
-            cursor: pointer;
-        }
-
-        .home-btn:hover {
-            background: rgba(255, 0, 255, 0.3);
-            box-shadow: 0 0 30px #ff00ff;
-        }
-
-        /* Контент */
-        .slide-content {
-            flex: 1;
-            padding: 30px;
-            overflow-y: auto;
-        }
-
-        .slide-title {
-            text-align: center;
-            margin-bottom: 40px;
-            font-size: 2.5rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #0f0, #00ff88);
+        .title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fff, #a0a0ff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 30px rgba(0, 255, 0, 0.3);
+            letter-spacing: 1px;
         }
 
-        /* Разделённый экран */
-        .split-screen {
+        .home-button {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 10px 24px;
+            border-radius: 60px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .home-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px -10px white;
+        }
+
+        /* КОНТЕНТ */
+        .content {
+            flex: 1;
+            padding: 25px 30px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+        }
+
+        .content::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .content::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .content::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 3px;
+        }
+
+        /* ЗАГОЛОВОК СЛАЙДА */
+        .slide-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 25px;
+            background: linear-gradient(135deg, #ffffff, #c0c0ff, #a0a0ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+        }
+
+        /* РАЗДЕЛЁННЫЙ ЭКРАН ДЛЯ ДЕМО */
+        .demo-split {
             display: flex;
             gap: 30px;
-            height: calc(100vh - 200px);
+            height: calc(95vh - 250px);
             min-height: 500px;
         }
 
-        .student-side, .teacher-side {
+        /* ЛЕВАЯ ЧАСТЬ - УЧИТЕЛЬ */
+        .teacher-panel {
             flex: 1;
-            border-radius: 24px;
-            padding: 25px;
-            position: relative;
-            border: 3px solid;
-            overflow-y: auto;
             background: rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 32px;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+            border-left: 4px solid #ecc94b;
+            position: relative;
         }
 
-        .student-side {
-            border-color: #4299e1;
-            background: rgba(66, 153, 225, 0.1);
-        }
-
-        .teacher-side {
-            border-color: #ecc94b;
-            background: rgba(236, 201, 75, 0.1);
-        }
-
-        .side-label {
+        .teacher-panel::before {
+            content: '👨‍🏫 УЧИТЕЛЬ';
             position: absolute;
             top: -15px;
-            left: 20px;
-            background: rgba(0, 0, 0, 0.8);
-            padding: 5px 20px;
-            border-radius: 50px;
-            font-weight: 700;
-            border: 2px solid;
-            backdrop-filter: blur(5px);
-        }
-
-        .student-side .side-label {
-            border-color: #4299e1;
-            color: #4299e1;
-        }
-
-        .teacher-side .side-label {
-            border-color: #ecc94b;
+            left: 30px;
+            background: rgba(20, 20, 30, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 6px 20px;
+            border-radius: 60px;
+            font-size: 0.9rem;
+            font-weight: 600;
             color: #ecc94b;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
-        /* Карточки */
-        .glass-card {
-            background: rgba(0, 255, 0, 0.05);
-            backdrop-filter: blur(20px);
-            border: 2px solid #0f0;
-            border-radius: 24px;
-            padding: 30px;
-            margin: 20px 0;
+        /* ПРАВАЯ ЧАСТЬ - ТЕЛЕФОН УЧЕНИКА */
+        .student-phone {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
+        .phone-frame {
+            width: 320px;
+            height: 620px;
+            background: #111;
+            border-radius: 48px;
+            padding: 15px 10px;
+            box-shadow: 0 30px 50px -20px black, 0 0 0 2px #333, 0 0 0 4px #222;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            background: rgba(20, 20, 30, 0.95);
+            border-radius: 36px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .phone-notch {
+            height: 40px;
+            background: #000;
+            border-radius: 0 0 20px 20px;
+            margin-bottom: 10px;
+            position: relative;
+        }
+
+        .phone-notch::after {
+            content: '●';
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #333;
+            font-size: 20px;
+        }
+
+        .phone-content {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            color: white;
+        }
+
+        .phone-header {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            color: #4299e1;
+            font-weight: 600;
+        }
+
+        /* СЕТКА СТАТИСТИКИ */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 25px;
-            margin: 40px 0;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin: 30px 0;
         }
 
         .stat-item {
-            background: rgba(0, 255, 0, 0.05);
-            border: 2px solid #0f0;
-            border-radius: 20px;
-            padding: 30px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 25px 15px;
             text-align: center;
-        }
-
-        .stat-icon {
-            font-size: 50px;
-            margin-bottom: 15px;
-            color: #0f0;
-        }
-
-        /* Элементы викторины */
-        .quiz-question {
-            background: rgba(255,255,255,0.05);
-            border-radius: 16px;
-            padding: 20px;
-            margin: 20px 0;
-        }
-
-        .quiz-option {
-            background: rgba(0,0,0,0.3);
-            border: 2px solid #0f0;
-            border-radius: 12px;
-            padding: 15px;
-            margin: 10px 0;
-            cursor: pointer;
             transition: all 0.3s;
         }
 
+        .stat-item:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.3));
+        }
+
+        .stat-item h4 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: white;
+        }
+
+        .stat-item p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+
+        /* СТЕКЛЯННЫЕ КАРТОЧКИ */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 28px;
+            padding: 25px;
+            margin: 15px 0;
+        }
+
+        .glass-card h3 {
+            color: white;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .glass-card ul {
+            list-style: none;
+        }
+
+        .glass-card li {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1rem;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* ЭЛЕМЕНТЫ ВИКТОРИНЫ */
+        .quiz-question {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            padding: 20px;
+            margin: 15px 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .quiz-question h3 {
+            color: white;
+            font-size: 1.1rem;
+            line-height: 1.4;
+            margin-bottom: 15px;
+        }
+
+        .quiz-option {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 12px 15px;
+            margin: 8px 0;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.95rem;
+        }
+
         .quiz-option:hover {
-            background: rgba(0,255,0,0.1);
+            background: rgba(255, 255, 255, 0.1);
             transform: translateX(5px);
         }
 
         .quiz-option.selected {
-            background: rgba(0,255,0,0.2);
-            border-color: white;
-        }
-
-        .input-field {
-            width: 100%;
-            padding: 15px;
-            background: rgba(0,0,0,0.5);
-            border: 2px solid #0f0;
-            border-radius: 12px;
-            color: #0f0;
-            font-size: 1.1rem;
-            margin: 10px 0;
+            background: rgba(66, 153, 225, 0.2);
+            border-color: #4299e1;
         }
 
         .btn {
-            background: rgba(0,255,0,0.1);
-            border: 2px solid #0f0;
-            color: #0f0;
-            padding: 15px 30px;
-            border-radius: 12px;
-            font-size: 1.1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 40px;
+            font-size: 1rem;
+            font-weight: 500;
             cursor: pointer;
             transition: all 0.3s;
             margin: 5px;
         }
 
         .btn:hover {
-            background: rgba(0,255,0,0.2);
-            box-shadow: 0 0 20px #0f0;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
         }
 
+        .btn.small {
+            padding: 8px 16px;
+            font-size: 0.9rem;
+        }
+
+        /* ТАБЛИЦА */
         .results-table {
-            background: rgba(0,0,0,0.3);
-            border-radius: 12px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 20px;
             overflow: hidden;
             margin: 20px 0;
         }
@@ -276,779 +374,389 @@
         }
 
         .results-table th {
-            background: rgba(0,255,0,0.2);
+            background: rgba(255, 255, 255, 0.1);
             padding: 12px;
             text-align: left;
-            color: #0f0;
+            color: white;
+            font-size: 0.95rem;
         }
 
         .results-table td {
-            padding: 12px;
-            border-bottom: 1px solid rgba(0,255,0,0.1);
+            padding: 10px 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
         }
 
+        /* СПИСОК ИГРОКОВ */
+        .players-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .player-card {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .player-name {
+            color: white;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .player-score {
+            color: #ecc94b;
+            font-size: 1.1rem;
+        }
+
+        /* НИЖНЯЯ ПАНЕЛЬ С БОЛЬШИМИ СТРЕЛКАМИ */
+        .bottom-nav {
+            padding: 20px 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.2);
+            flex-shrink: 0;
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            width: 70px;
+            height: 70px;
+            border-radius: 50px;
+            font-size: 2.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-btn:hover:not(:disabled) {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .slide-counter {
+            font-size: 1.5rem;
+            color: white;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 12px 35px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-weight: 500;
+        }
+
+        /* НАВИГАЦИЯ ПО СЛАЙДАМ */
         .note-box {
             background: rgba(255, 0, 255, 0.1);
-            border: 2px solid #ff00ff;
-            border-radius: 16px;
+            border: 1px solid rgba(255, 0, 255, 0.3);
+            border-radius: 32px;
             padding: 30px;
             text-align: center;
-            margin: 50px 0;
+            margin: 30px 0;
         }
 
         .note-box h3 {
-            color: #ff00ff;
+            color: #ff99ff;
             font-size: 2rem;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
-        @media (max-width: 1024px) {
-            .split-screen {
-                flex-direction: column;
-                height: auto;
-            }
+        .arch-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+        }
+
+        .step-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .step-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #fff, #a0a0ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .files-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .file-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 20px;
+            text-align: center;
+            text-decoration: none;
+            color: white;
+            transition: all 0.3s;
+        }
+
+        .file-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .file-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        /* ССЫЛКИ */
+        a {
+            color: inherit;
+            text-decoration: none;
         }
     </style>
 </head>
 <body>
     <div class="instruction">
-        <!-- Навигация -->
-        <div class="nav-bar">
-            <div class="nav-title">📘 ИНСТРУКЦИЯ: Мои сайты-викторины</div>
-            <div class="nav-controls">
-                <button class="nav-btn" onclick="prevSlide()" id="prevBtn">←</button>
-                <span class="slide-counter" id="slideCounter">1 / 10</span>
-                <button class="nav-btn" onclick="nextSlide()" id="nextBtn">→</button>
-                <div class="home-btn" onclick="goToSlide(1)">🏠 На главную</div>
+        <!-- ВЕРХНЯЯ ПАНЕЛЬ -->
+        <div class="top-bar">
+            <div class="title">
+                <i class="fas fa-shield-alt" style="margin-right: 10px;"></i>ИНСТРУКЦИЯ: Сайты-викторины
+            </div>
+            <div class="home-button" onclick="goToSlide(0)">
+                <i class="fas fa-home"></i> НА ГЛАВНУЮ
             </div>
         </div>
 
-        <!-- Контент -->
-        <div class="slide-content" id="slideContent"></div>
+        <!-- КОНТЕНТ -->
+        <div class="content" id="slideContent"></div>
+
+        <!-- НИЖНЯЯ ПАНЕЛЬ С БОЛЬШИМИ СТРЕЛКАМИ -->
+        <div class="bottom-nav">
+            <button class="nav-btn" onclick="prevSlide()" id="prevBtn">←</button>
+            <span class="slide-counter" id="slideCounter">1 / 10</span>
+            <button class="nav-btn" onclick="nextSlide()" id="nextBtn">→</button>
+        </div>
     </div>
 
     <script>
         // ============================================
-        // ДАННЫЕ ВИКТОРИНЫ (30 вопросов по кибербезопасности)
+        // ДАННЫЕ ВИКТОРИНЫ
         // ============================================
         const QUIZ_DATA = {
-            title: "Кибербезопасность",
             questions: [
-                // Вопрос 1
-                {
-                    id: 1,
-                    text: "Что такое фишинг?",
-                    options: [
-                        "1) Вид рыбалки",
-                        "2) Метод кражи данных через поддельные сайты/письма",
-                        "3) Антивирусная программа",
-                        "4) Тип шифрования"
-                    ],
-                    correct: 1,
-                    explanation: "Фишинг — вид интернет-мошенничества, целью которого является получение доступа к конфиденциальным данным пользователей."
-                },
-                // Вопрос 2
-                {
-                    id: 2,
-                    text: "Какой пароль считается самым ненадежным?",
-                    options: [
-                        "1) G7$k2!mN9",
-                        "2) Tr0ub4dor&3",
-                        "3) qwerty123",
-                        "4) P@ssw0rd!$"
-                    ],
-                    correct: 2,
-                    explanation: "qwerty123 — словарный пароль, взламывается за секунды."
-                },
-                // Вопрос 3
-                {
-                    id: 3,
-                    text: "Что такое 2FA?",
-                    options: [
-                        "1) Второй аккаунт",
-                        "2) Двухфакторная аутентификация",
-                        "3) Файловая система",
-                        "4) Тип вируса"
-                    ],
-                    correct: 1,
-                    explanation: "2FA (Two-Factor Authentication) — двухфакторная аутентификация, второй уровень защиты."
-                },
-                // Вопрос 4
-                {
-                    id: 4,
-                    text: "Что такое VPN?",
-                    options: [
-                        "1) Вирусная программа",
-                        "2) Виртуальная частная сеть",
-                        "3) Тип пароля",
-                        "4) Антивирус"
-                    ],
-                    correct: 1,
-                    explanation: "VPN (Virtual Private Network) — виртуальная частная сеть, шифрует трафик и скрывает IP."
-                },
-                // Вопрос 5
-                {
-                    id: 5,
-                    text: "Какой сайт помогает проверить, не взломали ли ваш email?",
-                    options: [
-                        "1) google.com",
-                        "2) haveibeenpwned.com",
-                        "3) yandex.ru",
-                        "4) github.com"
-                    ],
-                    correct: 1,
-                    explanation: "Have I Been Pwned проверяет, не было ли ваших данных в утечках."
-                },
-                // Вопрос 6
-                {
-                    id: 6,
-                    text: "Что такое вредоносное ПО?",
-                    options: [
-                        "1) Программа для учебы",
-                        "2) Вирусы, трояны, шпионы",
-                        "3) Антивирус",
-                        "4) Браузер"
-                    ],
-                    correct: 1,
-                    explanation: "Вредоносное ПО (малварь) — программы, наносящие вред устройству."
-                },
-                // Вопрос 7
-                {
-                    id: 7,
-                    text: "Что такое социальная инженерия?",
-                    options: [
-                        "1) Инженерия в соцсетях",
-                        "2) Психологическое манипулирование людьми",
-                        "3) Строительство соцобъектов",
-                        "4) Тип шифрования"
-                    ],
-                    correct: 1,
-                    explanation: "Социальная инженерия — метод взлома, основанный на психологии, а не на технологиях."
-                },
-                // Вопрос 8
-                {
-                    id: 8,
-                    text: "Как часто нужно обновлять ПО?",
-                    options: [
-                        "1) Раз в год",
-                        "2) Никогда",
-                        "3) Как только выходят обновления",
-                        "4) Только когда перестает работать"
-                    ],
-                    correct: 2,
-                    explanation: "Обновления закрывают уязвимости, их нужно устанавливать сразу."
-                },
-                // Вопрос 9
-                {
-                    id: 9,
-                    text: "Что такое публичный Wi-Fi?",
-                    options: [
-                        "1) Домашняя сеть",
-                        "2) Открытая сеть в кафе, аэропортах",
-                        "3) Спутниковый интернет",
-                        "4) Проводной интернет"
-                    ],
-                    correct: 1,
-                    explanation: "Публичный Wi-Fi — открытые сети, где можно перехватить трафик."
-                },
-                // Вопрос 10
-                {
-                    id: 10,
-                    text: "Что такое антивирус?",
-                    options: [
-                        "1) Программа для ускорения ПК",
-                        "2) Программа для защиты от вирусов",
-                        "3) Браузер",
-                        "4) Операционная система"
-                    ],
-                    correct: 1,
-                    explanation: "Антивирус обнаруживает и удаляет вредоносное ПО."
-                },
-                // Вопрос 11
-                {
-                    id: 11,
-                    text: "Почему опасно использовать один и тот же пароль на разных сайтах?",
-                    options: [
-                        "1) Его сложнее запомнить",
-                        "2) Если взломают один сайт, хакеры получат доступ ко всем вашим аккаунтам",
-                        "3) Сайты могут поссориться",
-                        "4) Это запрещено законом"
-                    ],
-                    correct: 1,
-                    explanation: "Если вы используете один пароль везде, потеря одного аккаунта ведет к потере всех остальных."
-                },
-                // Вопрос 12
-                {
-                    id: 12,
-                    text: "Что такое цифровой след?",
-                    options: [
-                        "1) Отпечаток пальца для входа в телефон",
-                        "2) Вся информация, которую вы оставляете о себе в интернете",
-                        "3) След от мышки на коврике",
-                        "4) Программа для слежки"
-                    ],
-                    correct: 1,
-                    explanation: "Лайки, комментарии, фото и поисковые запросы — всё это ваш цифровой след, который могут использовать мошенники."
-                },
-                // Вопрос 13
-                {
-                    id: 13,
-                    text: "Что такое кибербуллинг?",
-                    options: [
-                        "1) Взлом сайта",
-                        "2) Травля и оскорбления в интернете",
-                        "3) Вирус в компьютере",
-                        "4) Соревнования по киберспорту"
-                    ],
-                    correct: 1,
-                    explanation: "Кибербуллинг — это агрессивное поведение по отношению к другим людям в сети (оскорбления, угрозы, троллинг)."
-                },
-                // Вопрос 14
-                {
-                    id: 14,
-                    text: "Что такое бэкап и зачем он нужен?",
-                    options: [
-                        "1) Резервная копия данных, чтобы не потерять файлы",
-                        "2) Программа для ускорения игр",
-                        "3) Удаление вирусов",
-                        "4) Новый смартфон"
-                    ],
-                    correct: 0,
-                    explanation: "Бэкап (backup) — это копия ваших фото и документов на случай, если компьютер сломается или будет взломан."
-                },
-                // Вопрос 15
-                {
-                    id: 15,
-                    text: "Чем опасен публичный Wi-Fi?",
-                    options: [
-                        "1) Он платный",
-                        "2) В таких сетях могут перехватить ваши данные",
-                        "3) Он медленный",
-                        "4) К нему нельзя подключиться"
-                    ],
-                    correct: 1,
-                    explanation: "В публичных сетях хакеры могут перехватить ваш трафик и украсть пароли."
-                },
-                // Вопрос 16
-                {
-                    id: 16,
-                    text: "Как понять, что сайт безопасен для ввода платежных данных?",
-                    options: [
-                        "1) У сайта красивый дизайн",
-                        "2) В адресной строке есть значок замка и https://",
-                        "3) Сайт быстро загружается",
-                        "4) На сайте нет рекламы"
-                    ],
-                    correct: 1,
-                    explanation: "Значок замка и https означают, что соединение зашифровано."
-                },
-                // Вопрос 17
-                {
-                    id: 17,
-                    text: "Что такое двухфакторная аутентификация (2FA)?",
-                    options: [
-                        "1) Два разных пароля",
-                        "2) Вход по паролю и коду из SMS",
-                        "3) Два логина",
-                        "4) Проверка по email"
-                    ],
-                    correct: 1,
-                    explanation: "2FA добавляет дополнительный уровень защиты: даже если пароль украдут, хакер не сможет войти без вашего телефона."
-                },
-                // Вопрос 18
-                {
-                    id: 18,
-                    text: "Почему нельзя переходить по подозрительным ссылкам от друзей?",
-                    options: [
-                        "1) Друг может обидеться",
-                        "2) Аккаунт друга могли взломать и рассылать вирусы",
-                        "3) Это занимает много времени",
-                        "4) Ссылка может не открыться"
-                    ],
-                    correct: 1,
-                    explanation: "Если друг прислал странную ссылку — возможно, его аккаунт взломан."
-                },
-                // Вопрос 19
-                {
-                    id: 19,
-                    text: "Что такое троян?",
-                    options: [
-                        "1) Игра про древнюю Грецию",
-                        "2) Вредоносная программа, маскирующаяся под полезную",
-                        "3) Антивирус",
-                        "4) Драйвер"
-                    ],
-                    correct: 1,
-                    explanation: "Троян притворяется безобидной программой, но ворует данные."
-                },
-                // Вопрос 20
-                {
-                    id: 20,
-                    text: "Что делать, если получили письмо от 'банка' с требованием ввести пароль?",
-                    options: [
-                        "1) Срочно ввести пароль",
-                        "2) Позвонить в банк по официальному номеру",
-                        "3) Переслать друзьям",
-                        "4) Ответить на письмо"
-                    ],
-                    correct: 1,
-                    explanation: "Настоящие банки никогда не запрашивают пароли по почте. Это фишинг."
-                },
-                // Вопрос 21
-                {
-                    id: 21,
-                    text: "Зачем нужно регулярно обновлять программы?",
-                    options: [
-                        "1) Чтобы появлялись новые кнопки",
-                        "2) Чтобы закрыть уязвимости",
-                        "3) Чтобы тратить трафик",
-                        "4) Это не нужно"
-                    ],
-                    correct: 1,
-                    explanation: "Обновления содержат заплатки для дыр в безопасности."
-                },
-                // Вопрос 22
-                {
-                    id: 22,
-                    text: "Что такое программа-вымогатель?",
-                    options: [
-                        "1) Программа для благотворительности",
-                        "2) Вирус, блокирующий файлы и требующий выкуп",
-                        "3) Антивирус",
-                        "4) Игра"
-                    ],
-                    correct: 1,
-                    explanation: "Вирус шифрует файлы, хакеры требуют деньги за расшифровку."
-                },
-                // Вопрос 23
-                {
-                    id: 23,
-                    text: "Что делает VPN?",
-                    options: [
-                        "1) Чистит пыль",
-                        "2) Меняет IP и шифрует трафик",
-                        "3) Ускоряет интернет",
-                        "4) Удаляет вирусы"
-                    ],
-                    correct: 1,
-                    explanation: "VPN создает зашифрованный туннель для ваших данных."
-                },
-                // Вопрос 24
-                {
-                    id: 24,
-                    text: "Почему нельзя выкладывать фото паспорта?",
-                    options: [
-                        "1) Это некрасиво",
-                        "2) Данные могут использовать мошенники",
-                        "3) Соцсети удаляют",
-                        "4) Друзьям неинтересно"
-                    ],
-                    correct: 1,
-                    explanation: "Мошенники могут оформить кредиты или украсть личность."
-                },
-                // Вопрос 25
-                {
-                    id: 25,
-                    text: "Что значит 'Соединение не защищено'?",
-                    options: [
-                        "1) Сломался интернет",
-                        "2) Данные могут быть перехвачены",
-                        "3) Устаревший дизайн",
-                        "4) Мало посетителей"
-                    ],
-                    correct: 1,
-                    explanation: "У сайта нет SSL-сертификата. Вводить данные опасно."
-                },
-                // Вопрос 26
-                {
-                    id: 26,
-                    text: "Что такое сниффер?",
-                    options: [
-                        "1) Программа для нюхания",
-                        "2) Программа, перехватывающая данные в сети",
-                        "3) Сетевой фильтр",
-                        "4) Антивирус"
-                    ],
-                    correct: 1,
-                    explanation: "Снифферы перехватывают трафик в публичных сетях."
-                },
-                // Вопрос 27
-                {
-                    id: 27,
-                    text: "Почему важно проверять разрешения приложений?",
-                    options: [
-                        "1) Чтобы не заполнить память",
-                        "2) Игра не должна иметь доступ к контактам",
-                        "3) Это ускоряет телефон",
-                        "4) Чтобы не было рекламы"
-                    ],
-                    correct: 1,
-                    explanation: "Если калькулятор просит доступ к камере — он ворует данные."
-                },
-                // Вопрос 28
-                {
-                    id: 28,
-                    text: "Что такое ботнет?",
-                    options: [
-                        "1) Сеть зараженных компьютеров под контролем хакера",
-                        "2) Робот-пылесос",
-                        "3) Социальная сеть",
-                        "4) Браузер"
-                    ],
-                    correct: 0,
-                    explanation: "Хакеры используют ботнеты для атак и рассылки спама."
-                },
-                // Вопрос 29
-                {
-                    id: 29,
-                    text: "Что такое Honeypot (ловушка для хакеров)?",
-                    options: [
-                        "1) Сервер-приманка для изучения методов хакеров",
-                        "2) Сложный пароль",
-                        "3) Антивирус",
-                        "4) Сейф"
-                    ],
-                    correct: 0,
-                    explanation: "Фальшивая цель, чтобы отвлечь хакера и изучить его."
-                },
-                // Вопрос 30
-                {
-                    id: 30,
-                    text: "Главное правило безопасности в интернете?",
-                    options: [
-                        "1) Нет секретов",
-                        "2) Критическое мышление: проверяй информацию",
-                        "3) Самый длинный пароль",
-                        "4) Антивирус защитит от всего"
-                    ],
-                    correct: 1,
-                    explanation: "Самая лучшая защита — ваша внимательность."
-                }
+                { id: 1, text: "Что такое фишинг?", options: ["Вид рыбалки", "Метод кражи данных", "Антивирус", "Шифрование"], correct: 1 },
+                { id: 2, text: "Какой пароль ненадёжный?", options: ["G7$k2!mN9", "qwerty123", "Tr0ub4dor&3", "P@ssw0rd"], correct: 1 }
             ]
         };
 
         // ============================================
-        // СЛАЙДЫ ИНСТРУКЦИИ
+        // СЛАЙДЫ
         // ============================================
         const slides = [
-            // Слайд 1: Главная
+            // СЛАЙД 1: Главная
             () => `
                 <h1 class="slide-title">📘 ИНСТРУКЦИЯ: Мои сайты-викторины</h1>
-                
                 <div class="stats-grid">
                     <div class="stat-item"><div class="stat-icon">🔒</div><h4>30 вопросов</h4><p>По кибербезопасности</p></div>
                     <div class="stat-item"><div class="stat-icon">👥</div><h4>Два режима</h4><p>Ученик и Учитель</p></div>
-                    <div class="stat-item"><div class="stat-icon">⚡</div><h4>Real-time</h4><p>Ответы в реальном времени</p></div>
+                    <div class="stat-item"><div class="stat-icon">⚡</div><h4>Real-time</h4><p>Синхронизация</p></div>
                     <div class="stat-item"><div class="stat-icon">📊</div><h4>Статистика</h4><p>Таблица лидеров</p></div>
                 </div>
-
                 <div class="glass-card">
-                    <h2 style="color: #0f0; margin-bottom: 20px;">🎯 Что вы увидите в этой инструкции:</h2>
-                    <ul style="list-style: none; font-size: 1.2rem; line-height: 2;">
-                        <li>➡️ Как устроена архитектура</li>
-                        <li>➡️ Как подключается ученик</li>
-                        <li>➡️ Как учитель управляет игрой</li>
-                        <li>➡️ Как выглядит активный вопрос</li>
-                        <li>➡️ Где смотреть статистику</li>
+                    <h3>🎯 Что вы увидите:</h3>
+                    <ul>
+                        <li>• Как устроена архитектура</li>
+                        <li>• Как подключается ученик</li>
+                        <li>• Как учитель управляет игрой</li>
+                        <li>• Как выглядит активный вопрос</li>
+                        <li>• Где смотреть статистику</li>
                     </ul>
                 </div>
             `,
-
-            // Слайд 2: Архитектура
+            
+            // СЛАЙД 2: Архитектура
             () => `
-                <h1 class="slide-title">🏗 Как это работает</h1>
-                
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
-                    <div class="glass-card">
-                        <h3 style="color: #0f0;">Frontend</h3>
-                        <ul style="margin-top: 20px;">
-                            <li>HTML + CSS (Glassmorphism)</li>
-                            <li>JavaScript (чистый)</li>
-                            <li>Адаптивный дизайн</li>
-                        </ul>
-                    </div>
-                    <div class="glass-card">
-                        <h3 style="color: #0f0;">Backend</h3>
-                        <ul style="margin-top: 20px;">
-                            <li>Firebase Realtime Database</li>
-                            <li>Синхронизация в реальном времени</li>
-                            <li>Хранение вопросов и ответов</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="glass-card" style="margin-top: 30px;">
-                    <h3 style="color: #0f0;">📁 Структура проекта:</h3>
-                    <div style="background: #1a1a1a; padding: 20px; border-radius: 12px; margin-top: 15px; font-family: monospace;">
-                        index.html - главный экран<br>
-                        student.html - интерфейс ученика<br>
-                        teacher.html - панель учителя<br>
-                        firebase-config.js - настройки Firebase<br>
-                        <strong style="color: #ff0;">lecture.html - ЭТА ИНСТРУКЦИЯ</strong>
-                    </div>
+                <h1 class="slide-title">🏗 Архитектура проекта</h1>
+                <div class="arch-grid">
+                    <div class="glass-card"><h3>Frontend</h3><ul><li>HTML + CSS</li><li>JavaScript</li><li>Glassmorphism</li></ul></div>
+                    <div class="glass-card"><h3>Backend</h3><ul><li>Firebase</li><li>Realtime DB</li><li>Синхронизация</li></ul></div>
                 </div>
             `,
-
-            // Слайд 3: Два режима
+            
+            // СЛАЙД 3: Два режима
             () => `
-                <h1 class="slide-title">👥 Два режима: Ученик и Учитель</h1>
-                
-                <div class="split-screen">
-                    <div class="student-side">
-                        <div class="side-label">👨‍🎓 УЧЕНИК</div>
-                        <h3 style="color: #4299e1;">Видит:</h3>
-                        <ul style="margin: 20px 0 0 20px; line-height: 2;">
-                            <li>Экран входа (имя + код)</li>
-                            <li>Вопросы и варианты ответов</li>
-                            <li>Свой счёт</li>
-                            <li>Результат после ответа</li>
-                        </ul>
-                    </div>
-                    <div class="teacher-side">
-                        <div class="side-label">👨‍🏫 УЧИТЕЛЬ</div>
-                        <h3 style="color: #ecc94b;">Видит:</h3>
-                        <ul style="margin: 20px 0 0 20px; line-height: 2;">
-                            <li>Панель создания игры</li>
-                            <li>Код викторины (8 цифр)</li>
-                            <li>Список подключившихся</li>
-                            <li>Статистику ответов</li>
-                            <li>Кнопки управления</li>
-                        </ul>
-                    </div>
+                <h1 class="slide-title">👥 Роли: Ученик и Учитель</h1>
+                <div style="display: flex; gap: 20px;">
+                    <div class="glass-card" style="flex:1; border-left: 4px solid #4299e1;"><h3 style="color:#4299e1;">👨‍🎓 Ученик</h3><ul><li>Ввод имени и кода</li><li>Ответы на вопросы</li><li>Свой счёт</li></ul></div>
+                    <div class="glass-card" style="flex:1; border-left: 4px solid #ecc94b;"><h3 style="color:#ecc94b;">👨‍🏫 Учитель</h3><ul><li>Создание игры</li><li>Код викторины</li><li>Управление</li><li>Статистика</li></ul></div>
                 </div>
             `,
-
-            // Слайд 4: Подключение ученика
+            
+            // СЛАЙД 4: Подключение
             () => `
-                <h1 class="slide-title">🔌 Как подключается ученик</h1>
-                
-                <div class="split-screen">
-                    <div class="student-side">
-                        <div class="side-label">👨‍🎓 УЧЕНИК</div>
-                        <div style="padding: 20px;">
-                            <div style="background: rgba(0,0,0,0.3); border-radius: 16px; padding: 20px;">
-                                <input type="text" class="input-field" placeholder="Твоё имя" value="Анна" readonly>
-                                <input type="text" class="input-field" placeholder="Код викторины" value="12345678" readonly>
-                                <button class="btn" style="width: 100%;" onclick="alert('Демо: подключение к игре')">🔌 ПОДКЛЮЧИТЬСЯ</button>
-                            </div>
-                            <div style="margin-top: 30px;">
-                                <div class="quiz-question">
-                                    После подключения ученик видит:<br>
-                                    • Ожидание начала<br>
-                                    • Свой ник и текущий счёт<br>
-                                    • Статус игры
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="teacher-side">
-                        <div class="side-label">👨‍🏫 УЧИТЕЛЬ</div>
-                        <div style="padding: 20px;">
-                            <div style="background: rgba(0,0,0,0.3); border-radius: 16px; padding: 20px;">
-                                <h3 style="color: #ecc94b;">Код викторины:</h3>
-                                <div style="font-size: 3rem; text-align: center; color: #0f0;">12345678</div>
-                                <p style="margin-top: 20px;">Игроки онлайн:</p>
-                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px;">
-                                    <div style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 8px;">Анна</div>
-                                    <div style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 8px;">Иван</div>
-                                    <div style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 8px;">Мария</div>
-                                    <div style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 8px;">Петр</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <h1 class="slide-title">🔌 Подключение ученика</h1>
+                <div class="glass-card">
+                    <p style="color:white; font-size:1.2rem;">1. Учитель создаёт игру → получает код (8 цифр)</p>
+                    <p style="color:white; font-size:1.2rem; margin-top:15px;">2. Ученик вводит имя и код → подключается</p>
+                    <p style="color:white; font-size:1.2rem; margin-top:15px;">3. Учитель видит список игроков</p>
                 </div>
             `,
-
-            // Слайд 5: Активный вопрос
-            () => {
-                const q = QUIZ_DATA.questions[0];
-                return `
-                    <h1 class="slide-title">❓ Активный вопрос (ученик отвечает)</h1>
-                    
-                    <div class="split-screen">
-                        <div class="student-side">
-                            <div class="side-label">👨‍🎓 УЧЕНИК</div>
-                            <div style="padding: 20px;">
-                                <div class="quiz-question">
-                                    <h3 style="color: #4299e1;">${q.text}</h3>
-                                </div>
-                                <div class="options">
-                                    ${q.options.map((opt, idx) => `
-                                        <div class="quiz-option" onclick="selectDemoAnswer(this, ${idx}, ${q.correct})">
-                                            ${opt}
-                                        </div>
-                                    `).join('')}
-                                </div>
-                                <div id="demoAnswerStatus" style="margin-top: 20px; padding: 15px; border-radius: 12px; text-align: center;">
-                                    ⏳ Выбери вариант
-                                </div>
-                            </div>
-                        </div>
-                        <div class="teacher-side">
-                            <div class="side-label">👨‍🏫 УЧИТЕЛЬ</div>
-                            <div style="padding: 20px;">
-                                <div style="background: rgba(0,0,0,0.3); border-radius: 16px; padding: 20px;">
-                                    <h3 style="color: #ecc94b;">Статистика ответов:</h3>
-                                    <div class="results-table">
-                                        <table>
-                                            <tr><th>Ученик</th><th>Ответ</th></tr>
-                                            <tr><td>Анна</td><td>Выбрала вариант 2</td></tr>
-                                            <tr><td>Иван</td><td>Ещё не ответил</td></tr>
-                                            <tr><td>Мария</td><td>Выбрала вариант 1</td></tr>
-                                        </table>
-                                    </div>
-                                    <button class="btn" style="margin-top: 20px;" onclick="demoShowAnswer()">Показать правильный ответ</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            },
-
-            // Слайд 6: Результаты
+            
+            // СЛАЙД 5: Активный вопрос
+            () => `
+                <h1 class="slide-title">❓ Активный вопрос</h1>
+                <div class="glass-card">
+                    <p style="color:white; font-size:1.2rem;">Учитель нажимает "Следующий вопрос"</p>
+                    <p style="color:white; font-size:1.2rem; margin-top:15px;">Ученики видят вопрос и выбирают ответ</p>
+                    <p style="color:white; font-size:1.2rem; margin-top:15px;">Учитель видит, кто ответил</p>
+                </div>
+            `,
+            
+            // СЛАЙД 6: Показ ответа
+            () => `
+                <h1 class="slide-title">✅ Показ правильного ответа</h1>
+                <div class="glass-card">
+                    <p style="color:white; font-size:1.2rem;">Учитель нажимает "Показать ответ"</p>
+                    <p style="color:white; font-size:1.2rem; margin-top:15px;">Все видят правильный вариант и объяснение</p>
+                    <p style="color:white; font-size:1.2rem; margin-top:15px;">Ученикам начисляются очки</p>
+                </div>
+            `,
+            
+            // СЛАЙД 7: Статистика
             () => `
                 <h1 class="slide-title">📊 Таблица лидеров</h1>
-                
-                <div style="max-width: 800px; margin: 0 auto;">
-                    <div class="glass-card">
-                        <div class="results-table">
-                            <table>
-                                <tr><th>Место</th><th>Ученик</th><th>Правильных ответов</th><th>Очки</th></tr>
-                                <tr><td>🥇</td><td>Мария</td><td>5</td><td>15</td></tr>
-                                <tr><td>🥈</td><td>Анна</td><td>4</td><td>12</td></tr>
-                                <tr><td>🥉</td><td>Иван</td><td>3</td><td>9</td></tr>
-                                <tr><td>4</td><td>Петр</td><td>2</td><td>6</td></tr>
-                            </table>
-                        </div>
-                        <div style="margin-top: 30px; text-align: center;">
-                            <button class="btn" onclick="alert('Экспорт данных')">📥 Скачать результаты</button>
-                            <button class="btn" onclick="alert('Новый раунд')">🔄 Начать заново</button>
-                        </div>
-                    </div>
+                <div class="glass-card">
+                    <p style="color:white; font-size:1.2rem;">Учитель видит:</p>
+                    <ul style="margin-top:15px;">
+                        <li>• Кто ответил правильно</li>
+                        <li>• Текущий счёт каждого</li>
+                        <li>• Общую статистику</li>
+                    </ul>
                 </div>
             `,
-
-            // Слайд 7: Панель учителя (полная)
+            
+            // СЛАЙД 8: Алгоритм
             () => `
-                <h1 class="slide-title">👨‍🏫 Панель учителя (управление)</h1>
+                <h1 class="slide-title">📋 Алгоритм работы</h1>
+                <div class="steps-grid">
+                    <div class="step-card"><div class="step-number">1</div><p>Создание игры</p></div>
+                    <div class="step-card"><div class="step-number">2</div><p>Подключение</p></div>
+                    <div class="step-card"><div class="step-number">3</div><p>Вопрос</p></div>
+                    <div class="step-card"><div class="step-number">4</div><p>Ответы</p></div>
+                    <div class="step-card"><div class="step-number">5</div><p>Результаты</p></div>
+                </div>
+            `,
+            
+            // СЛАЙД 9: Примечание
+            () => `
+                <h1 class="slide-title">⚠️ Важно</h1>
+                <div class="note-box">
+                    <h3>Это просто пример</h3>
+                    <p>Принцип работы одинаков для всех моих викторин.<br>Меняется только тема и дизайн.</p>
+                </div>
+            `,
+            
+            // СЛАЙД 10: ЖИВОЕ ДЕМО
+            () => `
+                <h1 class="slide-title">🎮 Живая демонстрация</h1>
                 
-                <div class="glass-card">
-                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px;">
-                        <button class="btn" onclick="alert('Создать игру')">➕ СОЗДАТЬ</button>
-                        <button class="btn" onclick="alert('Следующий вопрос')">⏯ СЛЕДУЮЩИЙ</button>
-                        <button class="btn" onclick="alert('Показать ответ')">✅ ОТВЕТ</button>
-                        <button class="btn" onclick="alert('Сброс')">🔄 СБРОС</button>
-                        <button class="btn" onclick="alert('Статистика')">📊 СТАТИСТИКА</button>
-                        <button class="btn" onclick="alert('Настройки')">⚙ НАСТРОЙКИ</button>
+                <div class="demo-split">
+                    <!-- ЛЕВАЯ ЧАСТЬ: УЧИТЕЛЬ -->
+                    <div class="teacher-panel">
+                        <h3 style="color:#ecc94b; margin-bottom:20px;">📋 ПАНЕЛЬ УПРАВЛЕНИЯ</h3>
+                        
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px;">
+                            <button class="btn small" onclick="demoCreateGame()">➕ СОЗДАТЬ</button>
+                            <button class="btn small" onclick="demoNextQuestion()">⏯ ВОПРОС</button>
+                            <button class="btn small" onclick="demoShowAnswer()">✅ ОТВЕТ</button>
+                        </div>
+                        
+                        <div style="background: rgba(0,0,0,0.3); border-radius: 16px; padding: 15px; margin-bottom: 20px;">
+                            <div style="display: flex; justify-content: space-between;">
+                                <span>Код игры:</span>
+                                <span style="color:#ecc94b; font-size:1.8rem; letter-spacing: 5px;">12345678</span>
+                            </div>
+                            <div style="margin-top: 10px;">Игроков: <span id="demoPlayerCount">3</span></div>
+                        </div>
+                        
+                        <h4 style="color:white;">👥 ИГРОКИ:</h4>
+                        <div class="players-list" id="demoPlayersList">
+                            <div class="player-card"><div class="player-name">Анна</div><div class="player-score">12</div></div>
+                            <div class="player-card"><div class="player-name">Иван</div><div class="player-score">8</div></div>
+                            <div class="player-card"><div class="player-name">Мария</div><div class="player-score">15</div></div>
+                        </div>
+                        
+                        <div class="results-table" style="margin-top: 20px;" id="demoStats">
+                            <table>
+                                <tr><th>Вопрос</th><th>Ответили</th></tr>
+                                <tr><td>1</td><td>3/3</td></tr>
+                                <tr><td>2</td><td>2/3</td></tr>
+                            </table>
+                        </div>
                     </div>
                     
-                    <div style="margin-top: 30px; display: flex; gap: 30px;">
-                        <div style="flex: 1;">
-                            <h3 style="color: #0f0;">Вопросы:</h3>
-                            <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-top: 15px;">
-                                ${Array.from({length: 30}, (_, i) => `
-                                    <div style="background: rgba(0,255,0,0.1); border: 1px solid #0f0; border-radius: 8px; padding: 10px; text-align: center; cursor: pointer;" onclick="alert('Вопрос ${i+1}')">
-                                        ${i+1}
+                    <!-- ПРАВАЯ ЧАСТЬ: ТЕЛЕФОН УЧЕНИКА -->
+                    <div class="student-phone">
+                        <div class="phone-frame">
+                            <div class="phone-screen">
+                                <div class="phone-notch"></div>
+                                <div class="phone-content" id="phoneContent">
+                                    <div class="phone-header">📱 КИБЕР КАХУТ</div>
+                                    
+                                    <div style="background: rgba(255,255,255,0.05); border-radius: 16px; padding: 15px; margin-bottom: 15px;">
+                                        <div style="display: flex; justify-content: space-between; color:#4299e1;">
+                                            <span>Анна</span>
+                                            <span>12 очков</span>
+                                        </div>
                                     </div>
-                                `).join('')}
+                                    
+                                    <div class="quiz-question" id="demoQuestion">
+                                        <h3>Что такое фишинг?</h3>
+                                        <div class="quiz-option" onclick="demoSelectAnswer(this, 0)">Вид рыбалки</div>
+                                        <div class="quiz-option" onclick="demoSelectAnswer(this, 1)">Метод кражи данных</div>
+                                        <div class="quiz-option" onclick="demoSelectAnswer(this, 2)">Антивирус</div>
+                                        <div class="quiz-option" onclick="demoSelectAnswer(this, 3)">Шифрование</div>
+                                    </div>
+                                    
+                                    <div id="phoneStatus" style="text-align: center; padding: 10px; background: rgba(0,0,0,0.3); border-radius: 12px; margin-top: 10px;">
+                                        ⏳ Выбери ответ
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            `,
-
-            // Слайд 8: Пошаговый алгоритм
-            () => `
-                <h1 class="slide-title">📋 Пошаговый алгоритм работы</h1>
                 
-                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;">
-                    <div class="glass-card" style="text-align: center;">
-                        <div style="font-size: 3rem; color: #0f0;">1️⃣</div>
-                        <h3>Учитель создаёт игру</h3>
-                        <p>Получает код 12345678</p>
-                    </div>
-                    <div class="glass-card" style="text-align: center;">
-                        <div style="font-size: 3rem; color: #0f0;">2️⃣</div>
-                        <h3>Ученики подключаются</h3>
-                        <p>Вводят имя и код</p>
-                    </div>
-                    <div class="glass-card" style="text-align: center;">
-                        <div style="font-size: 3rem; color: #0f0;">3️⃣</div>
-                        <h3>Учитель запускает вопрос</h3>
-                        <p>Все видят вопрос на экране</p>
-                    </div>
-                    <div class="glass-card" style="text-align: center;">
-                        <div style="font-size: 3rem; color: #0f0;">4️⃣</div>
-                        <h3>Ученики отвечают</h3>
-                        <p>Учитель видит статистику</p>
-                    </div>
-                </div>
-                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 20px;">
-                    <div class="glass-card" style="text-align: center; grid-column: span 3;">
-                        <div style="font-size: 3rem; color: #0f0;">5️⃣</div>
-                        <h3>Учитель показывает правильный ответ и объяснение</h3>
-                    </div>
-                </div>
-            `,
-
-            // Слайд 9: Это просто пример
-            () => `
-                <h1 class="slide-title">⚠️ ВАЖНОЕ ПРИМЕЧАНИЕ</h1>
-                
-                <div class="note-box">
-                    <h3>Эта викторина — просто пример</h3>
-                    <p style="font-size: 1.3rem; margin: 30px 0; line-height: 1.8;">
-                        Принцип работы <strong style="color: #0f0;">одинаков</strong> для всех моих сайтов-викторин.<br>
-                        Меняется только <strong style="color: #ff0;">тема вопросов</strong> и <strong style="color: #ff0;">дизайн</strong>.
-                    </p>
-                    <div style="background: rgba(0,0,0,0.3); padding: 20px; border-radius: 16px;">
-                        <p style="color: #0f0;">✓ Та же архитектура Firebase</p>
-                        <p style="color: #0f0;">✓ Те же роли (ученик/учитель)</p>
-                        <p style="color: #0f0;">✓ Та же логика real-time</p>
-                        <p style="color: #0f0;">✓ Та же система подсчёта очков</p>
-                    </div>
-                </div>
-            `,
-
-            // Слайд 10: Ссылки на реальные файлы
-            () => `
-                <h1 class="slide-title">🔗 Реальные файлы проекта</h1>
-                
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; max-width: 900px; margin: 0 auto;">
-                    <a href="index.html" style="text-decoration: none;" target="_blank">
-                        <div class="glass-card" style="text-align: center; cursor: pointer;">
-                            <div style="font-size: 4rem;">🏠</div>
-                            <h2 style="color: #0f0;">index.html</h2>
-                            <p>Главный экран выбора роли</p>
-                        </div>
-                    </a>
-                    <a href="student.html" style="text-decoration: none;" target="_blank">
-                        <div class="glass-card" style="text-align: center; cursor: pointer;">
-                            <div style="font-size: 4rem;">👨‍🎓</div>
-                            <h2 style="color: #4299e1;">student.html</h2>
-                            <p>Интерфейс ученика</p>
-                        </div>
-                    </a>
-                    <a href="teacher.html" style="text-decoration: none;" target="_blank">
-                        <div class="glass-card" style="text-align: center; cursor: pointer;">
-                            <div style="font-size: 4rem;">👨‍🏫</div>
-                            <h2 style="color: #ecc94b;">teacher.html</h2>
-                            <p>Панель учителя</p>
-                        </div>
-                    </a>
-                    <a href="firebase-config.js" style="text-decoration: none;" target="_blank">
-                        <div class="glass-card" style="text-align: center; cursor: pointer;">
-                            <div style="font-size: 4rem;">🔥</div>
-                            <h2 style="color: #ff0;">firebase-config.js</h2>
-                            <p>Конфигурация Firebase</p>
-                        </div>
-                    </a>
-                </div>
-                
-                <div style="text-align: center; margin-top: 50px;">
-                    <p style="font-size: 1.2rem; color: #0f0;">Все файлы лежат в одной папке</p>
-                </div>
+                <p style="text-align: center; margin-top: 15px; color: rgba(255,255,255,0.5);">
+                    👆 Нажимай на кнопки и варианты ответов — всё работает!
+                </p>
             `
         ];
 
@@ -1061,8 +769,6 @@
         function updateSlide() {
             document.getElementById('slideContent').innerHTML = slides[currentSlide]();
             document.getElementById('slideCounter').textContent = `${currentSlide + 1} / ${totalSlides}`;
-            
-            // Блокировка кнопок на краях
             document.getElementById('prevBtn').disabled = currentSlide === 0;
             document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
         }
@@ -1082,15 +788,36 @@
         };
 
         window.goToSlide = function(num) {
-            currentSlide = num - 1;
+            currentSlide = num;
             updateSlide();
         };
 
         // ============================================
-        // ДЕМО-ФУНКЦИИ
+        // ДЕМО-ФУНКЦИИ ДЛЯ СЛАЙДА 10
         // ============================================
-        window.selectDemoAnswer = function(element, selectedIdx, correctIdx) {
-            // Снять выделение со всех
+        window.demoCreateGame = function() {
+            alert('✅ Игра создана! Код: 12345678');
+        };
+
+        window.demoNextQuestion = function() {
+            document.getElementById('demoQuestion').innerHTML = `
+                <h3>Что такое 2FA?</h3>
+                <div class="quiz-option" onclick="demoSelectAnswer(this, 0)">Второй аккаунт</div>
+                <div class="quiz-option" onclick="demoSelectAnswer(this, 1)">Двухфакторная аутентификация</div>
+                <div class="quiz-option" onclick="demoSelectAnswer(this, 2)">Файловая система</div>
+                <div class="quiz-option" onclick="demoSelectAnswer(this, 3)">Тип вируса</div>
+            `;
+            document.getElementById('phoneStatus').innerHTML = '⏳ Новый вопрос! Выбери ответ';
+            document.getElementById('phoneStatus').style.background = 'rgba(0,0,0,0.3)';
+        };
+
+        window.demoShowAnswer = function() {
+            document.getElementById('phoneStatus').innerHTML = '✅ Правильный ответ: Двухфакторная аутентификация';
+            document.getElementById('phoneStatus').style.background = 'rgba(0,255,0,0.2)';
+        };
+
+        window.demoSelectAnswer = function(element, idx) {
+            // Снять выделение
             document.querySelectorAll('.quiz-option').forEach(opt => {
                 opt.classList.remove('selected');
             });
@@ -1098,20 +825,15 @@
             // Выделить выбранный
             element.classList.add('selected');
             
-            const status = document.getElementById('demoAnswerStatus');
-            if (selectedIdx === correctIdx) {
-                status.innerHTML = '✅ ПРАВИЛЬНО!';
-                status.style.background = 'rgba(0,255,0,0.2)';
-                status.style.color = '#0f0';
+            // Показать результат
+            const isCorrect = (idx === 1); // Для первого вопроса правильный ответ 1, для второго тоже 1
+            if (isCorrect) {
+                document.getElementById('phoneStatus').innerHTML = '✅ ПРАВИЛЬНО! +1 очко';
+                document.getElementById('phoneStatus').style.background = 'rgba(0,255,0,0.2)';
             } else {
-                status.innerHTML = '❌ НЕПРАВИЛЬНО';
-                status.style.background = 'rgba(255,0,0,0.2)';
-                status.style.color = '#ff4444';
+                document.getElementById('phoneStatus').innerHTML = '❌ НЕПРАВИЛЬНО';
+                document.getElementById('phoneStatus').style.background = 'rgba(255,0,0,0.2)';
             }
-        };
-
-        window.demoShowAnswer = function() {
-            alert('Правильный ответ: ' + QUIZ_DATA.questions[0].options[QUIZ_DATA.questions[0].correct]);
         };
 
         // Инициализация
