@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Инструкция: Сайты-викторины для педагогов</title>
+    <title>Инструкция: Сайты-викторины</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -13,18 +13,22 @@
             box-sizing: border-box;
         }
 
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
-            min-height: 100vh;
+            background: #0a0a0f;
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
             position: relative;
-            background: #0a0a0f;
         }
 
-        /* СТЕКЛЯННЫЙ ФОН С БЛИКАМИ */
+        /* ФОН С БЛИКАМИ */
         body::before {
             content: '';
             position: fixed;
@@ -33,357 +37,312 @@
             background: 
                 radial-gradient(circle at 20% 30%, rgba(100, 150, 255, 0.4) 0%, transparent 40%),
                 radial-gradient(circle at 80% 70%, rgba(150, 100, 255, 0.4) 0%, transparent 40%),
-                radial-gradient(circle at 40% 20%, rgba(255, 200, 100, 0.3) 0%, transparent 50%),
-                radial-gradient(circle at 90% 20%, rgba(100, 200, 255, 0.4) 0%, transparent 40%);
+                radial-gradient(circle at 40% 20%, rgba(255, 200, 100, 0.3) 0%, transparent 50%);
             z-index: -1;
-            animation: slowDrift 30s ease-in-out infinite alternate;
-        }
-
-        @keyframes slowDrift {
-            0% { transform: scale(1); filter: hue-rotate(0deg); }
-            100% { transform: scale(1.05); filter: hue-rotate(5deg); }
         }
 
         /* ОСНОВНОЕ СТЕКЛО */
         .instruction {
-            width: 92vw;
-            height: 92vh;
-            background: rgba(25, 30, 40, 0.4);
-            backdrop-filter: blur(20px) saturate(180%);
-            -webkit-backdrop-filter: blur(20px) saturate(180%);
-            border-radius: 60px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 
-                0 30px 60px -20px rgba(0, 0, 0, 0.8),
-                inset 0 1px 2px rgba(255, 255, 255, 0.2);
+            width: 100vw;
+            height: 100vh;
+            background: rgba(20, 25, 35, 0.5);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             display: flex;
             flex-direction: column;
-            overflow: hidden;
             position: relative;
-        }
-
-        /* БЛИК НА СТЕКЛЕ */
-        .instruction::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.1) 0%, transparent 60%);
-            opacity: 0.5;
-            pointer-events: none;
-            animation: glassReflection 15s infinite linear;
-        }
-
-        @keyframes glassReflection {
-            0% { transform: rotate(0deg); opacity: 0.3; }
-            50% { transform: rotate(5deg); opacity: 0.5; }
-            100% { transform: rotate(0deg); opacity: 0.3; }
         }
 
         /* ВЕРХНЯЯ ПАНЕЛЬ */
         .top-bar {
-            padding: 20px 35px;
+            padding: 20px 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            background: rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(10px);
+            background: rgba(0, 0, 0, 0.3);
             flex-shrink: 0;
         }
 
         .title {
-            font-size: 1.8rem;
+            font-size: 2rem;
             font-weight: 600;
             color: white;
             display: flex;
             align-items: center;
-            gap: 12px;
-            text-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            gap: 15px;
         }
 
         .title i {
             color: #aaccff;
-            filter: drop-shadow(0 0 10px rgba(170,204,255,0.5));
         }
 
-        .home-button {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.15);
+        .home-btn {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
             color: white;
-            padding: 10px 24px;
+            padding: 12px 30px;
             border-radius: 50px;
-            font-size: 1rem;
+            font-size: 1.1rem;
             cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            transition: 0.3s;
         }
 
-        .home-button:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
+        .home-btn:hover {
+            background: rgba(255,255,255,0.2);
         }
 
         /* КОНТЕНТ */
         .content {
             flex: 1;
-            padding: 30px 35px;
-            overflow-y: auto;
-            scrollbar-width: thin;
-            scrollbar-color: rgba(255,255,255,0.2) transparent;
-        }
-
-        .content::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        .content::-webkit-scrollbar-thumb {
-            background: rgba(255,255,255,0.2);
-            border-radius: 10px;
-        }
-
-        /* ЗАГОЛОВОК */
-        .slide-title {
-            text-align: center;
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 30px;
-            color: white;
-            text-shadow: 0 0 30px rgba(255,255,255,0.3);
-            letter-spacing: 1px;
-        }
-
-        /* ОСНОВНЫЕ КАРТОЧКИ */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 36px;
-            padding: 30px;
-            margin-bottom: 25px;
-            box-shadow: 0 20px 40px -20px rgba(0,0,0,0.5);
-        }
-
-        .glass-card h2 {
-            color: white;
-            font-size: 1.8rem;
-            margin-bottom: 20px;
             display: flex;
             align-items: center;
-            gap: 12px;
+            justify-content: center;
+            padding: 30px;
+        }
+
+        /* КАРТОЧКА ШАГА */
+        .step-card {
+            width: 90%;
+            max-width: 1400px;
+            background: rgba(30, 35, 45, 0.6);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 50px;
+            padding: 40px;
+            box-shadow: 0 30px 60px -20px black;
+        }
+
+        .step-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .step-number {
+            width: 80px;
+            height: 80px;
+            background: rgba(255,255,255,0.1);
+            border: 2px solid rgba(255,255,255,0.2);
+            border-radius: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .step-title {
+            font-size: 2.5rem;
             font-weight: 600;
-        }
-
-        .glass-card h3 {
-            color: white;
-            font-size: 1.4rem;
-            margin: 20px 0 10px;
-            font-weight: 500;
-        }
-
-        .glass-card p {
-            color: rgba(255,255,255,0.9);
-            font-size: 1.1rem;
-            line-height: 1.6;
-            margin-bottom: 15px;
-        }
-
-        .glass-card ul, .glass-card ol {
-            color: rgba(255,255,255,0.9);
-            font-size: 1.1rem;
-            line-height: 1.8;
-            margin-left: 25px;
-            margin-bottom: 15px;
-        }
-
-        .glass-card li {
-            margin-bottom: 8px;
-        }
-
-        .glass-card li strong {
             color: white;
         }
 
-        /* ВАЖНЫЙ БЛОК */
-        .important-block {
-            background: rgba(255, 215, 0, 0.1);
-            border-left: 6px solid #ffd700;
+        .step-subtitle {
+            color: rgba(255,255,255,0.6);
+            font-size: 1.2rem;
+            margin-top: 5px;
+        }
+
+        /* ФРАГМЕНТ ИНТЕРФЕЙСА */
+        .interface-fragment {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 36px;
+            padding: 30px;
+            border: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 30px;
+        }
+
+        .fragment-label {
+            display: inline-block;
+            background: rgba(255,255,255,0.1);
+            padding: 8px 20px;
+            border-radius: 30px;
+            color: #aaa;
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+
+        /* ТОЧНАЯ КОПИЯ ПАНЕЛИ УЧИТЕЛЯ */
+        .teacher-panel-exact {
+            background: #1a1a2a;
             border-radius: 24px;
-            padding: 20px 25px;
-            margin: 25px 0;
+            padding: 25px;
+            border: 1px solid #333;
+            font-family: 'Share Tech Mono', monospace;
         }
 
-        .important-block p {
-            color: #fff2c0;
+        .teacher-header-exact {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #333;
+        }
+
+        .teacher-title-exact {
+            color: #0f0;
             font-size: 1.2rem;
         }
 
-        /* ТАБЛИЦА */
-        .simple-table {
-            background: rgba(0,0,0,0.2);
-            border-radius: 24px;
-            overflow: hidden;
-            margin: 20px 0;
+        .game-code-exact {
+            background: #000;
+            padding: 10px 20px;
+            border-radius: 12px;
+            border: 1px solid #0f0;
+            color: #0f0;
+            font-size: 2rem;
+            letter-spacing: 5px;
         }
 
-        .simple-table table {
+        .control-buttons-exact {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .ctrl-btn-exact {
+            background: #0f0;
+            color: black;
+            border: none;
+            padding: 15px;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .players-section-exact {
+            background: #000;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .players-grid-exact {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .player-card-exact {
+            background: #1a1a2a;
+            border: 1px solid #0f0;
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .player-name-exact {
+            color: #0f0;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .stats-table-exact {
+            background: #000;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .stats-table-exact table {
             width: 100%;
             border-collapse: collapse;
         }
 
-        .simple-table th {
-            background: rgba(255,255,255,0.1);
-            padding: 15px;
+        .stats-table-exact th {
+            background: #1a1a2a;
+            color: #0f0;
+            padding: 12px;
             text-align: left;
+        }
+
+        .stats-table-exact td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #333;
             color: white;
-            font-weight: 500;
         }
 
-        .simple-table td {
-            padding: 12px 15px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            color: rgba(255,255,255,0.8);
+        /* ТЕЛЕФОН УЧЕНИКА */
+        .student-phone-exact {
+            width: 300px;
+            margin: 0 auto;
         }
 
-        /* ДЕМОНСТРАЦИЯ */
-        .demo-showcase {
-            display: flex;
-            gap: 30px;
-            margin: 30px 0;
-        }
-
-        .teacher-demo {
-            flex: 1.2;
-            background: rgba(0,0,0,0.3);
-            border: 1px solid rgba(255,255,255,0.15);
-            border-radius: 28px;
-            padding: 25px;
-            border-left: 4px solid #ecc94b;
-        }
-
-        .teacher-demo h3 {
-            color: #ecc94b;
-            margin-bottom: 20px;
-            font-size: 1.4rem;
-        }
-
-        .phone-demo {
-            flex: 0.8;
-            display: flex;
-            justify-content: center;
-        }
-
-        .phone-mock {
-            width: 280px;
+        .phone-frame-exact {
             background: #111;
-            border-radius: 36px;
+            border-radius: 40px;
             padding: 12px 6px;
             box-shadow: 0 30px 40px -20px black;
         }
 
-        .phone-screen-mock {
+        .phone-screen-exact {
             background: #1a1a2a;
-            border-radius: 30px;
-            height: 520px;
+            border-radius: 32px;
+            height: 550px;
             overflow: hidden;
             display: flex;
             flex-direction: column;
         }
 
-        .phone-top {
-            background: #2a2a3a;
+        .phone-header-exact {
+            background: #000;
             padding: 15px;
             text-align: center;
             color: #4299e1;
-            font-weight: 600;
             border-bottom: 1px solid #333;
         }
 
-        .phone-body {
+        .phone-body-exact {
             flex: 1;
-            padding: 15px;
+            padding: 20px;
             color: white;
         }
 
-        .demo-question {
-            background: #252535;
+        .question-box-exact {
+            background: #000;
             border-radius: 16px;
-            padding: 15px;
-            margin-bottom: 15px;
-            font-weight: 500;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #4299e1;
         }
 
-        .demo-option {
-            background: #252535;
+        .option-exact {
+            background: #000;
             border: 1px solid #333;
             border-radius: 12px;
-            padding: 12px;
+            padding: 15px;
             margin: 8px 0;
-            color: #ccc;
-        }
-
-        .demo-button {
-            background: rgba(255,255,255,0.1);
-            border: 1px solid #444;
-            border-radius: 12px;
-            padding: 12px;
-            margin: 5px;
             color: white;
-            display: inline-block;
-            cursor: pointer;
-            font-size: 0.9rem;
-        }
-
-        .demo-button:hover {
-            background: rgba(255,255,255,0.2);
-        }
-
-        .players-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin: 15px 0;
-        }
-
-        .player-mini {
-            background: #252535;
-            border-radius: 12px;
-            padding: 10px;
-            text-align: center;
-        }
-
-        .player-name {
-            color: #ecc94b;
-            font-weight: 600;
         }
 
         /* НИЖНЯЯ НАВИГАЦИЯ */
         .bottom-nav {
-            padding: 20px 35px;
+            padding: 20px 40px;
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 40px;
+            gap: 50px;
             border-top: 1px solid rgba(255,255,255,0.1);
-            background: rgba(0,0,0,0.2);
-            backdrop-filter: blur(10px);
+            background: rgba(0,0,0,0.3);
             flex-shrink: 0;
         }
 
         .nav-btn {
             background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.2);
             color: white;
-            width: 70px;
-            height: 70px;
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
-            font-size: 2rem;
+            font-size: 2.5rem;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: 0.3s;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -400,19 +359,12 @@
         }
 
         .slide-counter {
-            font-size: 1.3rem;
+            font-size: 1.8rem;
             color: white;
             background: rgba(255,255,255,0.05);
-            padding: 10px 35px;
+            padding: 15px 50px;
             border-radius: 50px;
             border: 1px solid rgba(255,255,255,0.1);
-            font-weight: 500;
-        }
-
-        .divider {
-            height: 2px;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            margin: 30px 0;
         }
     </style>
 </head>
@@ -423,9 +375,7 @@
             <div class="title">
                 <i class="fas fa-shield-alt"></i> ИНСТРУКЦИЯ: САЙТЫ-ВИКТОРИНЫ
             </div>
-            <div class="home-button" onclick="goToSlide(0)">
-                <i class="fas fa-home"></i> ПЕРВЫЙ СЛАЙД
-            </div>
+            <div class="home-btn" onclick="goToSlide(0)">ПЕРВЫЙ ШАГ</div>
         </div>
 
         <!-- КОНТЕНТ -->
@@ -434,246 +384,319 @@
         <!-- НИЖНЯЯ НАВИГАЦИЯ -->
         <div class="bottom-nav">
             <button class="nav-btn" onclick="prevSlide()" id="prevBtn">←</button>
-            <span class="slide-counter" id="slideCounter">1 / 5</span>
+            <span class="slide-counter" id="slideCounter">1 / 6</span>
             <button class="nav-btn" onclick="nextSlide()" id="nextBtn">→</button>
         </div>
     </div>
 
     <script>
-        // СОДЕРЖАНИЕ СЛАЙДОВ
         const slides = [
-            // СЛАЙД 1: ВВЕДЕНИЕ
+            // ШАГ 1: Создание игры
             () => `
-                <h1 class="slide-title">📋 ОБЩАЯ ИНФОРМАЦИЯ</h1>
-                
-                <div class="glass-card">
-                    <h2><i class="fas fa-cube"></i> Что это такое</h2>
-                    <p>Сайты-викторины — это интерактивные образовательные инструменты, которые позволяют:</p>
-                    <ul>
-                        <li><strong>Проводить опросы в реальном времени</strong> — ученики отвечают с телефонов</li>
-                        <li><strong>Вести статистику</strong> — кто и как ответил, общий рейтинг</li>
-                        <li><strong>Адаптировать под любой предмет</strong> — меняется только содержание вопросов</li>
-                    </ul>
-                    
-                    <div class="divider"></div>
-                    
-                    <h2><i class="fas fa-info-circle"></i> Важное примечание</h2>
-                    <div class="important-block">
-                        <p>В данной инструкции в качестве примера используется викторина по кибербезопасности с 30 вопросами. <strong>Принцип работы одинаков для всех викторин</strong> — меняется только тема и дизайн.</p>
-                    </div>
-                </div>
-                
-                <div class="glass-card">
-                    <h2><i class="fas fa-list"></i> Содержание инструкции</h2>
-                    <ul>
-                        <li><strong>Слайд 2:</strong> Архитектура — как устроена система</li>
-                        <li><strong>Слайд 3:</strong> Роли — учитель и ученик</li>
-                        <li><strong>Слайд 4:</strong> Пошаговый алгоритм проведения</li>
-                        <li><strong>Слайд 5:</strong> Демонстрация работы</li>
-                    </ul>
-                </div>
-            `,
-            
-            // СЛАЙД 2: АРХИТЕКТУРА
-            () => `
-                <h1 class="slide-title">🏗 КАК ЭТО УСТРОЕНО</h1>
-                
-                <div class="glass-card">
-                    <h2><i class="fas fa-server"></i> Техническая основа</h2>
-                    <p>Все викторины построены на единой архитектуре:</p>
-                    <ul>
-                        <li><strong>Frontend:</strong> HTML, CSS, JavaScript — интерфейсы ученика и учителя</li>
-                        <li><strong>Backend:</strong> Firebase Realtime Database — облачная база данных</li>
-                        <li><strong>Синхронизация:</strong> все изменения видны мгновенно на всех устройствах</li>
-                    </ul>
-                    
-                    <h3 style="margin-top: 20px;">📁 Состав проекта</h3>
-                    <ul>
-                        <li><code>index.html</code> — главный экран выбора роли</li>
-                        <li><code>student.html</code> — интерфейс ученика</li>
-                        <li><code>teacher.html</code> — панель учителя</li>
-                        <li><code>firebase-config.js</code> — настройки подключения</li>
-                    </ul>
-                </div>
-                
-                <div class="glass-card">
-                    <h2><i class="fas fa-arrows-alt-h"></i> Принцип работы</h2>
-                    <ol>
-                        <li><strong>Учитель создаёт игру</strong> — в базе данных появляется комната с уникальным кодом</li>
-                        <li><strong>Ученики подключаются</strong> — вводят код и попадают в комнату</li>
-                        <li><strong>Учитель запускает вопрос</strong> — вопрос отображается у всех учеников</li>
-                        <li><strong>Ответы сохраняются в Firebase</strong> — учитель видит статистику в реальном времени</li>
-                        <li><strong>Результаты суммируются</strong> — формируется таблица лидеров</li>
-                    </ol>
-                </div>
-            `,
-            
-            // СЛАЙД 3: РОЛИ
-            () => `
-                <h1 class="slide-title">👥 РОЛИ УЧАСТНИКОВ</h1>
-                
-                <div style="display: flex; gap: 20px; margin-bottom: 20px;">
-                    <div class="glass-card" style="flex: 1; border-left: 4px solid #4299e1;">
-                        <h2 style="color:#4299e1;"><i class="fas fa-user-graduate"></i> УЧЕНИК</h2>
-                        <p><strong>Что делает:</strong></p>
-                        <ul>
-                            <li>Вводит своё имя и код викторины</li>
-                            <li>Видит вопросы на экране телефона</li>
-                            <li>Выбирает вариант ответа</li>
-                            <li>Видит свой результат и правильные ответы</li>
-                            <li>Может следить за своим счётом</li>
-                        </ul>
-                        
-                        <p style="margin-top: 15px;"><strong>Интерфейс:</strong></p>
-                        <ul>
-                            <li>Адаптирован под мобильные устройства</li>
-                            <li>Крупные кнопки для удобства</li>
-                            <li>Минимум текста, максимум действий</li>
-                        </ul>
+                <div class="step-card">
+                    <div class="step-header">
+                        <div class="step-number">1</div>
+                        <div>
+                            <div class="step-title">СОЗДАНИЕ ИГРЫ</div>
+                            <div class="step-subtitle">Нажмите кнопку "СОЗДАТЬ" — появится код</div>
+                        </div>
                     </div>
                     
-                    <div class="glass-card" style="flex: 1; border-left: 4px solid #ecc94b;">
-                        <h2 style="color:#ecc94b;"><i class="fas fa-chalkboard-teacher"></i> УЧИТЕЛЬ</h2>
-                        <p><strong>Что делает:</strong></p>
-                        <ul>
-                            <li>Создаёт новую викторину (получает код)</li>
-                            <li>Видит список подключившихся учеников</li>
-                            <li>Управляет ходом игры:
-                                <ul>
-                                    <li>Запускает вопросы</li>
-                                    <li>Показывает правильные ответы</li>
-                                    <li>Переходит к следующему вопросу</li>
-                                </ul>
-                            </li>
-                            <li>Видит статистику ответов в реальном времени</li>
-                            <li>Может сбросить игру и начать заново</li>
-                        </ul>
-                    </div>
-                </div>
-            `,
-            
-            // СЛАЙД 4: АЛГОРИТМ ПРОВЕДЕНИЯ
-            () => `
-                <h1 class="slide-title">📋 ПОШАГОВЫЙ АЛГОРИТМ</h1>
-                
-                <div class="glass-card">
-                    <h2><i class="fas fa-1-circle"></i> Подготовка</h2>
-                    <ol>
-                        <li><strong>Откройте панель учителя</strong> (teacher.html)</li>
-                        <li><strong>Нажмите "Создать викторину"</strong> — система сгенерирует 8-значный код</li>
-                        <li><strong>Сообщите код ученикам</strong> (покажите на экране или продиктуйте)</li>
-                        <li><strong>Ученики заходят на student.html</strong> со своих телефонов, вводят имена и код</li>
-                        <li><strong>На панели учителя появится список подключившихся</strong> — можно начинать</li>
-                    </ol>
-                    
-                    <div class="divider"></div>
-                    
-                    <h2><i class="fas fa-2-circle"></i> Проведение</h2>
-                    <ol>
-                        <li><strong>Нажмите "Показать вопрос"</strong> — первый вопрос появляется у всех учеников</li>
-                        <li><strong>Ученики выбирают ответы</strong> — на панели учителя видно, кто ответил</li>
-                        <li><strong>Когда все ответили (или истекло время), нажмите "Показать ответ"</strong> — ученики видят правильный вариант и объяснение</li>
-                        <li><strong>Очки начисляются автоматически</strong> — за правильные ответы</li>
-                        <li><strong>Нажмите "Следующий вопрос"</strong> и повторите пункты 1-4</li>
-                    </ol>
-                    
-                    <div class="divider"></div>
-                    
-                    <h2><i class="fas fa-3-circle"></i> Завершение</h2>
-                    <ol>
-                        <li><strong>После последнего вопроса откройте таблицу лидеров</strong> — видно итоговые результаты</li>
-                        <li><strong>Можно скачать статистику</strong> (кнопка "Экспорт") или показать на экране</li>
-                        <li><strong>Для новой игры нажмите "Сбросить"</strong> — создастся новый код</li>
-                    </ol>
-                </div>
-                
-                <div class="important-block">
-                    <p><i class="fas fa-lightbulb"></i> <strong>Совет:</strong> Первый раз проведите викторину в тестовом режиме с несколькими учениками, чтобы освоить управление.</p>
-                </div>
-            `,
-            
-            // СЛАЙД 5: ДЕМОНСТРАЦИЯ
-            () => `
-                <h1 class="slide-title">🎮 ДЕМОНСТРАЦИЯ РАБОТЫ</h1>
-                
-                <div class="demo-showcase">
-                    <!-- ПАНЕЛЬ УЧИТЕЛЯ -->
-                    <div class="teacher-demo">
-                        <h3><i class="fas fa-user-tie"></i> ПАНЕЛЬ УЧИТЕЛЯ</h3>
-                        
-                        <div style="background: #1e1e2e; border-radius: 16px; padding: 15px; margin-bottom: 20px;">
-                            <div style="display: flex; justify-content: space-between;">
-                                <span style="color: #aaa;">Код игры:</span>
-                                <span style="color: #ecc94b; font-size: 1.8rem; letter-spacing: 3px;">12345678</span>
+                    <div class="interface-fragment">
+                        <div class="fragment-label">🔍 ФРАГМЕНТ: Панель учителя</div>
+                        <div class="teacher-panel-exact">
+                            <div class="teacher-header-exact">
+                                <span class="teacher-title-exact">👨‍🏫 ПАНЕЛЬ УЧИТЕЛЯ</span>
+                                <div class="game-code-exact">12345678</div>
                             </div>
-                            <div style="margin-top: 10px; color: #aaa;">Учеников: 3</div>
+                            
+                            <div class="control-buttons-exact">
+                                <button class="ctrl-btn-exact" style="background:#0f0;">➕ СОЗДАТЬ</button>
+                                <button class="ctrl-btn-exact" style="background:#333; color:#666;" disabled>⏯ ВОПРОС</button>
+                                <button class="ctrl-btn-exact" style="background:#333; color:#666;" disabled>✅ ОТВЕТ</button>
+                                <button class="ctrl-btn-exact" style="background:#333; color:#666;" disabled>⏩ ДАЛЕЕ</button>
+                            </div>
+                            
+                            <div class="players-section-exact">
+                                <div style="color:#0f0; margin-bottom:10px;">👥 УЧЕНИКИ (0)</div>
+                                <div style="color:#666; text-align:center; padding:20px;">Ожидание подключения...</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="color:white; font-size:1.2rem; text-align:center;">
+                        ✅ После создания код (12345678) появляется автоматически
+                    </div>
+                </div>
+            `,
+            
+            // ШАГ 2: Подключение ученика
+            () => `
+                <div class="step-card">
+                    <div class="step-header">
+                        <div class="step-number">2</div>
+                        <div>
+                            <div class="step-title">ПОДКЛЮЧЕНИЕ УЧЕНИКА</div>
+                            <div class="step-subtitle">Ученик вводит имя и код на телефоне</div>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; gap: 40px; align-items: center;">
+                        <div style="flex: 1;">
+                            <div class="interface-fragment">
+                                <div class="fragment-label">📱 ФРАГМЕНТ: Экран ученика</div>
+                                <div class="student-phone-exact">
+                                    <div class="phone-frame-exact">
+                                        <div class="phone-screen-exact">
+                                            <div class="phone-header-exact">📱 ПОДКЛЮЧЕНИЕ</div>
+                                            <div class="phone-body-exact">
+                                                <div style="background:#000; border-radius:12px; padding:20px;">
+                                                    <input type="text" placeholder="Твоё имя" value="Анна" style="width:100%; padding:12px; margin-bottom:15px; background:#1a1a2a; border:1px solid #4299e1; color:white; border-radius:8px;">
+                                                    <input type="text" placeholder="Код игры" value="12345678" style="width:100%; padding:12px; margin-bottom:20px; background:#1a1a2a; border:1px solid #4299e1; color:white; border-radius:8px;">
+                                                    <button style="width:100%; padding:15px; background:#4299e1; border:none; color:white; border-radius:12px; font-weight:600;">🔌 ПОДКЛЮЧИТЬСЯ</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         
-                        <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px;">
-                            <span class="demo-button" onclick="alert('Создана новая игра')">➕ СОЗДАТЬ</span>
-                            <span class="demo-button" onclick="demoNext()">⏯ ВОПРОС</span>
-                            <span class="demo-button" onclick="demoAnswer()">✅ ОТВЕТ</span>
-                            <span class="demo-button" onclick="alert('Следующий вопрос')">⏩ ДАЛЕЕ</span>
+                        <div style="flex: 1;">
+                            <div class="interface-fragment">
+                                <div class="fragment-label">👨‍🏫 Панель учителя (после подключения)</div>
+                                <div class="teacher-panel-exact">
+                                    <div class="players-section-exact">
+                                        <div style="color:#0f0; margin-bottom:10px;">👥 УЧЕНИКИ (1)</div>
+                                        <div class="players-grid-exact">
+                                            <div class="player-card-exact">
+                                                <div class="player-name-exact">Анна</div>
+                                                <div style="color:#0f0;">0 очков</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `,
+            
+            // ШАГ 3: Запуск вопроса
+            () => `
+                <div class="step-card">
+                    <div class="step-header">
+                        <div class="step-number">3</div>
+                        <div>
+                            <div class="step-title">ЗАПУСК ВОПРОСА</div>
+                            <div class="step-subtitle">Учитель нажимает "ВОПРОС" — у всех появляется задание</div>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; gap: 40px;">
+                        <div style="flex: 1;">
+                            <div class="interface-fragment">
+                                <div class="fragment-label">👨‍🏫 Действие учителя</div>
+                                <div class="teacher-panel-exact">
+                                    <div class="control-buttons-exact">
+                                        <button class="ctrl-btn-exact" style="background:#333; color:#666;" disabled>➕ СОЗДАТЬ</button>
+                                        <button class="ctrl-btn-exact" style="background:#0f0;">▶ ВОПРОС</button>
+                                        <button class="ctrl-btn-exact" style="background:#333; color:#666;" disabled>✅ ОТВЕТ</button>
+                                        <button class="ctrl-btn-exact" style="background:#333; color:#666;" disabled>⏩ ДАЛЕЕ</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         
-                        <h4 style="color:white; margin-bottom: 10px;">👥 УЧЕНИКИ:</h4>
-                        <div class="players-grid">
-                            <div class="player-mini"><div class="player-name">Анна</div><div>12 очков</div></div>
-                            <div class="player-mini"><div class="player-name">Иван</div><div>8 очков</div></div>
-                            <div class="player-mini"><div class="player-name">Мария</div><div>15 очков</div></div>
-                            <div class="player-mini"><div class="player-name">Пётр</div><div>5 очков</div></div>
+                        <div style="flex: 1;">
+                            <div class="interface-fragment">
+                                <div class="fragment-label">📱 Что видит ученик</div>
+                                <div class="student-phone-exact">
+                                    <div class="phone-frame-exact">
+                                        <div class="phone-screen-exact">
+                                            <div class="phone-header-exact">📱 Анна | 0 очков</div>
+                                            <div class="phone-body-exact">
+                                                <div class="question-box-exact">
+                                                    <div style="color:#4299e1; margin-bottom:10px;">ВОПРОС 1/30</div>
+                                                    <div style="font-size:1.2rem;">Что такое фишинг?</div>
+                                                </div>
+                                                <div class="option-exact">Вид рыбалки</div>
+                                                <div class="option-exact">Кража данных</div>
+                                                <div class="option-exact">Антивирус</div>
+                                                <div class="option-exact">Шифрование</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `,
+            
+            // ШАГ 4: Ответ ученика
+            () => `
+                <div class="step-card">
+                    <div class="step-header">
+                        <div class="step-number">4</div>
+                        <div>
+                            <div class="step-title">ОТВЕТ УЧЕНИКА</div>
+                            <div class="step-subtitle">Ученик выбирает вариант — учитель видит статистику</div>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; gap: 40px;">
+                        <div style="flex: 1;">
+                            <div class="interface-fragment">
+                                <div class="fragment-label">📱 Ученик выбрал ответ</div>
+                                <div class="student-phone-exact">
+                                    <div class="phone-frame-exact">
+                                        <div class="phone-screen-exact">
+                                            <div class="phone-header-exact">📱 Анна | 0 очков</div>
+                                            <div class="phone-body-exact">
+                                                <div class="question-box-exact">Что такое фишинг?</div>
+                                                <div class="option-exact" style="border-color:#4299e1; background:#1a3a5a;">Вид рыбалки</div>
+                                                <div class="option-exact" style="background:#0f0; color:black; border-color:#0f0;">✓ Кража данных</div>
+                                                <div class="option-exact">Антивирус</div>
+                                                <div class="option-exact">Шифрование</div>
+                                                <div style="text-align:center; margin-top:15px; color:#0f0;">✅ Ожидание ответа учителя</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         
-                        <div style="margin-top: 20px;">
-                            <div class="simple-table">
+                        <div style="flex: 1;">
+                            <div class="interface-fragment">
+                                <div class="fragment-label">👨‍🏫 Учитель видит кто ответил</div>
+                                <div class="teacher-panel-exact">
+                                    <div class="stats-table-exact">
+                                        <table>
+                                            <tr><th>Ученик</th><th>Ответ</th><th>Статус</th></tr>
+                                            <tr><td>Анна</td><td>Кража данных</td><td style="color:#0f0;">✅</td></tr>
+                                            <tr><td>Иван</td><td>—</td><td style="color:#aaa;">⏳</td></tr>
+                                            <tr><td>Мария</td><td>Вид рыбалки</td><td style="color:#0f0;">✅</td></tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `,
+            
+            // ШАГ 5: Показ ответа
+            () => `
+                <div class="step-card">
+                    <div class="step-header">
+                        <div class="step-number">5</div>
+                        <div>
+                            <div class="step-title">ПОКАЗ ПРАВИЛЬНОГО ОТВЕТА</div>
+                            <div class="step-subtitle">Учитель нажимает "ОТВЕТ" — все видят объяснение</div>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; gap: 40px;">
+                        <div style="flex: 1;">
+                            <div class="interface-fragment">
+                                <div class="fragment-label">👨‍🏫 Действие учителя</div>
+                                <div class="teacher-panel-exact">
+                                    <div class="control-buttons-exact">
+                                        <button class="ctrl-btn-exact" style="background:#333; color:#666;" disabled>➕ СОЗДАТЬ</button>
+                                        <button class="ctrl-btn-exact" style="background:#333; color:#666;" disabled>▶ ВОПРОС</button>
+                                        <button class="ctrl-btn-exact" style="background:#0f0;">✅ ОТВЕТ</button>
+                                        <button class="ctrl-btn-exact" style="background:#333; color:#666;" disabled>⏩ ДАЛЕЕ</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="flex: 1;">
+                            <div class="interface-fragment">
+                                <div class="fragment-label">📱 Что видит ученик</div>
+                                <div class="student-phone-exact">
+                                    <div class="phone-frame-exact">
+                                        <div class="phone-screen-exact">
+                                            <div class="phone-header-exact">📱 Анна | +1 очко</div>
+                                            <div class="phone-body-exact">
+                                                <div class="question-box-exact">Что такое фишинг?</div>
+                                                <div style="background:#0f0; color:black; padding:15px; border-radius:12px; margin-bottom:15px;">
+                                                    ✓ Правильно: Кража данных
+                                                </div>
+                                                <div style="background:#2a2a3a; padding:15px; border-radius:12px; color:#ccc;">
+                                                    <strong>Объяснение:</strong> Фишинг — вид мошенничества, целью которого является получение доступа к данным пользователей.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `,
+            
+            // ШАГ 6: Результаты
+            () => `
+                <div class="step-card">
+                    <div class="step-header">
+                        <div class="step-number">6</div>
+                        <div>
+                            <div class="step-title">ТАБЛИЦА ЛИДЕРОВ</div>
+                            <div class="step-subtitle">Итоговая статистика после всех вопросов</div>
+                        </div>
+                    </div>
+                    
+                    <div class="interface-fragment">
+                        <div class="fragment-label">👨‍🏫 ПОЛНАЯ ПАНЕЛЬ УЧИТЕЛЯ (ТОЧНАЯ КОПИЯ)</div>
+                        <div class="teacher-panel-exact">
+                            <div class="teacher-header-exact">
+                                <span class="teacher-title-exact">👨‍🏫 ПАНЕЛЬ УЧИТЕЛЯ</span>
+                                <div class="game-code-exact">12345678</div>
+                            </div>
+                            
+                            <div class="control-buttons-exact">
+                                <button class="ctrl-btn-exact">➕ СОЗДАТЬ</button>
+                                <button class="ctrl-btn-exact">▶ ВОПРОС</button>
+                                <button class="ctrl-btn-exact">✅ ОТВЕТ</button>
+                                <button class="ctrl-btn-exact">⏩ ДАЛЕЕ</button>
+                            </div>
+                            
+                            <div class="players-section-exact">
+                                <div style="color:#0f0; margin-bottom:10px;">👥 УЧЕНИКИ (4)</div>
+                                <div class="players-grid-exact">
+                                    <div class="player-card-exact"><div class="player-name-exact">Мария</div><div>15 очков</div></div>
+                                    <div class="player-card-exact"><div class="player-name-exact">Анна</div><div>12 очков</div></div>
+                                    <div class="player-card-exact"><div class="player-name-exact">Иван</div><div>8 очков</div></div>
+                                    <div class="player-card-exact"><div class="player-name-exact">Пётр</div><div>5 очков</div></div>
+                                </div>
+                            </div>
+                            
+                            <div class="stats-table-exact">
                                 <table>
                                     <tr><th>Вопрос</th><th>Ответили</th><th>Правильно</th></tr>
                                     <tr><td>1</td><td>4/4</td><td>3</td></tr>
-                                    <tr><td>2</td><td>3/4</td><td>2</td></tr>
+                                    <tr><td>2</td><td>4/4</td><td>4</td></tr>
+                                    <tr><td>3</td><td>3/4</td><td>2</td></tr>
+                                    <tr><td>...</td><td>...</td><td>...</td></tr>
                                 </table>
+                            </div>
+                            
+                            <div style="margin-top:20px; display:flex; gap:10px;">
+                                <button class="ctrl-btn-exact" style="flex:1;">📥 СКАЧАТЬ</button>
+                                <button class="ctrl-btn-exact" style="flex:1;">🔄 СБРОСИТЬ</button>
                             </div>
                         </div>
                     </div>
                     
-                    <!-- ТЕЛЕФОН УЧЕНИКА -->
-                    <div class="phone-demo">
-                        <div class="phone-mock">
-                            <div class="phone-screen-mock">
-                                <div class="phone-top">
-                                    📱 УЧЕНИК: Анна
-                                </div>
-                                <div class="phone-body" id="demoPhoneBody">
-                                    <div style="text-align: center; margin-bottom: 15px; color:#4299e1;">
-                                        ВОПРОС 1/30
-                                    </div>
-                                    
-                                    <div class="demo-question" id="demoQuestion">
-                                        Что такое фишинг?
-                                    </div>
-                                    
-                                    <div id="demoOptions">
-                                        <div class="demo-option" onclick="demoSelect(0)">Вид рыбалки</div>
-                                        <div class="demo-option" onclick="demoSelect(1)">Кража данных</div>
-                                        <div class="demo-option" onclick="demoSelect(2)">Антивирус</div>
-                                        <div class="demo-option" onclick="demoSelect(3)">Шифрование</div>
-                                    </div>
-                                    
-                                    <div id="demoStatus" style="text-align: center; margin-top: 15px; padding: 10px; background: #252535; border-radius: 12px;">
-                                        ⏳ Выберите ответ
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div style="text-align:center; margin-top:20px; color:#aaa;">
+                        ⚠️ Это пример викторины по кибербезопасности. Принцип работы одинаков для всех тем.
                     </div>
-                </div>
-                
-                <div class="glass-card" style="margin-top: 20px;">
-                    <p style="text-align: center; color: #aaa;">⬆️ Это интерактивная демонстрация. Нажимайте на кнопки и варианты ответов, чтобы увидеть, как работает система.</p>
                 </div>
             `
         ];
 
-        // НАВИГАЦИЯ
         let currentSlide = 0;
         const totalSlides = slides.length;
 
@@ -703,38 +726,6 @@
             updateSlide();
         };
 
-        // ДЕМО-ФУНКЦИИ
-        window.demoNext = function() {
-            document.getElementById('demoQuestion').innerHTML = 'Что такое двухфакторная аутентификация?';
-            document.getElementById('demoOptions').innerHTML = `
-                <div class="demo-option" onclick="demoSelect(0)">Второй пароль</div>
-                <div class="demo-option" onclick="demoSelect(1)">Подтверждение по SMS</div>
-                <div class="demo-option" onclick="demoSelect(2)">Вход по отпечатку</div>
-                <div class="demo-option" onclick="demoSelect(3)">Два уровня защиты</div>
-            `;
-            document.getElementById('demoStatus').innerHTML = '⏳ Новый вопрос! Выберите ответ';
-        };
-
-        window.demoAnswer = function() {
-            document.getElementById('demoStatus').innerHTML = '✅ Правильный ответ: Кража данных (объяснение: фишинг — это метод мошенничества)';
-        };
-
-        window.demoSelect = function(idx) {
-            // Подсветка выбранного
-            document.querySelectorAll('.demo-option').forEach(opt => {
-                opt.style.background = '#252535';
-            });
-            event.target.style.background = '#3a4a6a';
-            
-            // Результат
-            if (idx === 1) {
-                document.getElementById('demoStatus').innerHTML = '✅ ПРАВИЛЬНО! +1 очко';
-            } else {
-                document.getElementById('demoStatus').innerHTML = '❌ НЕПРАВИЛЬНО';
-            }
-        };
-
-        // СТАРТ
         document.addEventListener('DOMContentLoaded', updateSlide);
     </script>
 </body>
